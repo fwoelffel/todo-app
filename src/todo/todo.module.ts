@@ -1,14 +1,21 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { join } from 'path';
+import { DateScalar } from './scalars/date.scalar';
 import { Todo } from './todo.entity';
+import { TodoResolver } from './todo.resolver';
 import { TodoService } from './todo.service';
 
 @Module({
   imports: [
     GraphQLModule.forRoot({
-      typePaths: ['./**/*.graphql'],
+      typePaths: [join(__dirname, 'todo.graphql')],
+      debug: true,
       playground: true,
+      resolvers: {
+        Date: DateScalar,
+      },
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -32,6 +39,6 @@ import { TodoService } from './todo.service';
     }),
     TypeOrmModule.forFeature([Todo]),
   ],
-  providers: [TodoService],
+  providers: [TodoService, TodoResolver, DateScalar],
 })
 export class TodoModule {}

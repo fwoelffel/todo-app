@@ -1,0 +1,35 @@
+scalar Date
+
+type Todo {
+  id: Int!
+  createdAt: Date
+  updatedAt: Date
+  done: Boolean!
+  title: String
+}
+
+input CreateTodoInput {
+  done: Boolean
+  title: String!
+}
+
+input UpdateTodoInput {
+  id: Int!
+  done: Boolean
+  title: String
+}
+
+input RemoveTodoInput {
+  id: Int!
+}
+
+type Mutation {
+  createTodo(input: CreateTodoInput!): Todo!
+  updateTodo(input: UpdateTodoInput!): Todo!
+  removeTodo(input: RemoveTodoInput!): Todo
+}
+
+type Query {
+  getTodo(id: Int!): Todo
+  getTodos: [Todo]!
+}

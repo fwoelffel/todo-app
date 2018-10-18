@@ -15,6 +15,10 @@ export class TodoService {
     return this.repository.findOne(id);
   }
 
+  getMany(): Promise<Todo[]> {
+    return this.repository.find();
+  }
+
   async updateOne(id: number, t: DeepPartial<Todo>): Promise<Todo> {
     return this.repository.save(
       this.repository.merge(await this.getOne(id), t),
